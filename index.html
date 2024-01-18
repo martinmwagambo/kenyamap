@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya Population Map</title>
+    <!-- Include Leaflet and Folium CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/folium/folium.css" />
+    <link rel="stylesheet" href="style.css"/>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+              }
+            }
+          }
+        }
+      </script>
+</head>
+<body>
+   <!-- Map container -->
+    <div id="mapContainer bg-transparent bg-black bg-opacity-50 ">
+      <div class="bg-transparent bg-black bg-opacity-50 hover:bg-grey-400 font-bold text-black text-center text-red-500">
+        <h1 class="fs-18">Distribution of AICE Africa trainees in Kenya</h1></b>
+      <p>A Visual Exploration of AICE Africa Trainees' Geographical Presence and Influence within Kenya's Diverse Regions</p>
+      <div id="map"></div>
+      </div>
+      <!-- Sidebar -->
+     
+      <nav class="main-menu flex items-center justify-center">
+            <ul>
+                <li>
+                    <a href="https://jbfarrow.com">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                          <div class="p-4 text-center w-60 pl-10">
+                            <label for="csvFileInput" class="font-bold">Upload CSV File:</label>
+                            <input type="file" id="csvFileInput" accept=".csv"><br>
+                            <br>
+                            <!-- Submit button to process and plot the data -->
+                            <button class="bg-red-500 mt-4 px-4 py-2 rounded text-white font-bold hover:bg-green-400" onclick="handleSubmit()">Upload</button>
+                        </div>
+                        </span>
+                    </a>
+                  
+                </li>
+        </nav>
+     
+    
+    
+    <!-- Include Leaflet and Folium JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/folium/folium.js"></script>
+    <!-- Include your JavaScript code -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+#Import the libraries to use
+import geopandas as gdp
+import folium
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+#Load geospacial data using geopandas
+dg = gdp.read_file('kenyan-counties.geojson')
+dg.head()
+
+# Read the population Data into a dataframe
+df = pd.read_csv('kenya-population-by-sex-and-county.csv')
+df.head(10)
+
+# Filter out irrelevant rows
+df = df[df.index > 6]
+df.head()
+
+# Insert the original column names
+# Rename columns for better readability
+df.columns = ('Name', 'Male', 'Female','Intersex','Total')
+df.head()
+
+# Check counties whose names do not correspond to the geojson record
+dc = df[~df['Name'].isin(dg['COUNTY'])]
+
+# Replace county names for consistency between data sources
+df['Name'] = df['Name'].replace(['Elgeyo-Marakwet'],'Keiyo-Marakwet')
+df['Name'] = df['Name'].replace(['Tharaka-Nithi'],'Tharaka')
+df['Name'] = df['Name'].replace(['Taita-Taveta'],'Taita Taveta')
+#...and reset index..
+df.reset_index(drop=True,inplace = True)
+#...Then display the complete cleaned dataframe
+df
+
+# Investigate the dataframe
+df.info()
+
+#our column "Total" is an Object instead of a number so we amend it first
+# Convert the 'Total' column to integers
+df['Total'] =df['Total'].astype(int)
+df.info()
+
+# Set the center coordinates for the map
+centre = (-1.292066,36.821945)
+#Create a Folium map of Kenya
+kenya_map = folium.Map(location = centre,zoom_start =6.2)
+# Load GeoJSON file for Kenya's counties
+kenya_geo = 'kenyan-counties.geojson'
+#folium.Choropleth(geo_data=geo).add_to(world_map)
+# Create a choropleth map using Folium
+kenya_map.choropleth(geo_data=kenya_geo,data = df,columns = ['Name','Total'],
+key_on='feature.properties.COUNTY',
+fill_color = 'YlOrRd',
+legend_name ='Population Guide')
+
+#Display the map
+kenya_map
